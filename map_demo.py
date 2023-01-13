@@ -2,22 +2,8 @@
 import streamlit as st
 import folium
 import pandas as pd 
-import subprocess
-import sys
-
-try:
-    import streamlit_pandas as sp
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", 'streamlit_pandas'])
-finally:
-    import streamlit_pandas as sp
-
-try:
-    from streamlit_folium import st_folium
-except ImportError:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", 'streamlit_folium'])
-finally:
-    from streamlit_folium import st_folium    
+import streamlit_pandas as sp
+from streamlit_folium import st_folium
 
 st.title("Map Demo Test")
 st.write("The map below is supposed to display a potential implementation of cartographic visualizations for an example data set.")
