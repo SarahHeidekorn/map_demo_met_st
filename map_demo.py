@@ -68,8 +68,8 @@ world_map = folium.Map(
 for _, site in df_2.iterrows():
     folium.Marker(
         location = [site['Latitude'], site['Longitude']], #also einfach der Name der jeweiligen Spalten/Columns
-        popup = site['Lithology/Mineral'],
-        tooltip = site['Lithology/Mineral'],
+        popup = site['Lithology_Mineral'],
+        tooltip = site['Lithology_Mineral'],
     ).add_to(world_map)  
 
 st_world_map = st_folium(world_map, width=700, height=450) 
