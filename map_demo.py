@@ -2,42 +2,68 @@
 import streamlit as st
 import folium
 import pandas as pd 
-import streamlit_pandas as sp
+import plotly.express as px
 from streamlit_folium import st_folium
 
+st.set_page_config(page_title = "Map Demo", layout = "wide")    
 st.title("Map Demo Test")
 st.write("The map below is supposed to display a potential implementation of cartographic visualizations for an example data set.")
 st.sidebar.header("Select Options")
 
 
-@st.cache(allow_output_mutation=True) ## only "for-the-time-being"-solution as individual request are to be made with the APIs --> reload needed!
+@st.cache(allow_output_mutation=True) 
 def load_data():
     df = pd.read_csv(file)
     return df
 
 file = "test_data.csv"
 df = load_data()
+df.rename(columns={'Lithology/Mineral' : 'Lithology_Mineral'}, inplace=True)
+
+location_type = st.sidebar.multiselect(
+    "Choose the location type:",
+    options =df["Location Type"].unique()
+)
+    
+
+material = st.sidebar.multiselect(
+    "Choose the lithology/mineral",
+    options = df["Lithology_Mineral"].unique()
+)
+
+sample = st.sidebar.multiselect(
+    "Choose the sample",
+    options = df["Sample"].unique()
+)
+    
+data_package = st.sidebar.multiselect(
+    "Choose the data package",
+    options = df["Data Package"].unique()
+)    
 
 
-multiselect_options = {
-    "Lithology/Mineral" : "multiselect",
-    "Sample" : "multiselect",
-    "Location Type" : "multiselect",
-    "Data Package" : "multiselect"    
-}
+
+location_type_str = '|'.join(location_type)
+material_str = '|'.join(material)
+sample_str = '|'.join(sample)
+data_package_str = '|'.join(data_package)
+
+# Filter dataframe using str.contains
+df_selection = df[df['Location Type'].str.contains(location_type_str) & 
+                  df['Lithology_Mineral'].str.contains(material_str) & 
+                  df['Sample'].str.contains(sample_str) & 
+                  df['Data Package'].str.contains(data_package_str)]
 
 
-interactive_widgets = sp.create_widgets(df, multiselect_options)
-widget_filter = sp.filter_df(df, interactive_widgets)
-st.write(widget_filter)
+st.dataframe(df_selection)
 
+df_2 = df_selection.dropna(subset=['Longitude'])
+df_2 = df_selection.dropna(subset=['Latitude'])
 
 world_map = folium.Map(
     zoom_start = 4,
     location = [-25.0000, 140.0000])
 
-df_2 = widget_filter.dropna(subset=['Longitude'])
-df_2 = widget_filter.dropna(subset=['Latitude'])
 
 for _, site in df_2.iterrows():
     folium.Marker(
