@@ -20,35 +20,32 @@ file = "test_data.csv"
 df = load_data()
 df.rename(columns={'Lithology/Mineral' : 'Lithology_Mineral'}, inplace=True)
 
-location_type = st.sidebar.multiselect(
+filter_form = st.sidebar.form(key="Options") #create container to optimize functionality
+
+#set filter options
+location_type = filter_form.multiselect(
     "Choose the location type:",
     options =df["Location Type"].unique()
 )
-    
-
-material = st.sidebar.multiselect(
+material = filter_form.multiselect(
     "Choose the lithology/mineral",
     options = df["Lithology_Mineral"].unique()
 )
-
-sample = st.sidebar.multiselect(
+sample = filter_form.multiselect(
     "Choose the sample",
     options = df["Sample"].unique()
-)
-    
-data_package = st.sidebar.multiselect(
+)    
+data_package = filter_form.multiselect(
     "Choose the data package",
     options = df["Data Package"].unique()
 )    
-
-
-
+ 
 location_type_str = '|'.join(location_type)
 material_str = '|'.join(material)
 sample_str = '|'.join(sample)
 data_package_str = '|'.join(data_package)
 
-# Filter dataframe using str.contains
+# filter dataframe using str.contains
 df_selection = df[df['Location Type'].str.contains(location_type_str) & 
                   df['Lithology_Mineral'].str.contains(material_str) & 
                   df['Sample'].str.contains(sample_str) & 
@@ -56,7 +53,10 @@ df_selection = df[df['Location Type'].str.contains(location_type_str) &
 
 
 st.dataframe(df_selection)
+filter_form.form_submit_button("Submit")
 
+
+# construction of the interactive map:
 df_2 = df_selection.dropna(subset=['Longitude'])
 df_2 = df_selection.dropna(subset=['Latitude'])
 
