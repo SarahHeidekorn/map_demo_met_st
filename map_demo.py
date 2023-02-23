@@ -11,7 +11,7 @@ st.write("The map below is supposed to display a potential implementation of car
 st.sidebar.header("Select Options")
 
 
-@st.cache(allow_output_mutation=True) 
+@st.cache_data() 
 def load_data():
     df = pd.read_csv(file)
     return df
