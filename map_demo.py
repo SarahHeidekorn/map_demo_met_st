@@ -9,9 +9,9 @@ st.set_page_config(page_title = "Map Demo", layout = "wide")
 
 base_maps = {
     "OpenStreetMap": folium.TileLayer("cartodbpositron"),
-    "Stamen Terrain": folium.TileLayer("Stamen Terrain"),
-    "Stamen Toner": folium.TileLayer("Stamen Toner"),
-    "Stamen Watercolor": folium.TileLayer("Stamen Watercolor"),
+    "Terrain": folium.TileLayer("Stamen Terrain"),
+    "Toner": folium.TileLayer("Stamen Toner"),
+    "Watercolor": folium.TileLayer("Stamen Watercolor"),
 }
 
 st.title("Map Demo Test")
