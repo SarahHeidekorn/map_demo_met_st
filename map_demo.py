@@ -66,16 +66,19 @@ filter_form.form_submit_button("Submit")
 df_2 = df_selection.dropna(subset=['Longitude'])
 df_2 = df_selection.dropna(subset=['Latitude'])
 
+selected_base_map = st.sidebar.selectbox("Select a base map", list(base_maps.keys()))
+
 world_map = folium.Map(
     zoom_start = 4,
-    location = [-25.0000, 140.0000])
-
+    location = [-25.0000, 140.0000],
+    tiles = base_maps[selected_base_map],
+)
 
 for _, site in df_2.iterrows():
     folium.Marker(
-        location = [site['Latitude'], site['Longitude']], #also einfach der Name der jeweiligen Spalten/Columns
+        location = [site['Latitude'], site['Longitude']], 
         popup = site['Lithology_Mineral'],
         tooltip = site['Lithology_Mineral'],
     ).add_to(world_map)  
 
-st_world_map = st_folium(world_map, width=700, height=450) 
+st_world_map = st_folium(world_map, width=700, height=450)
