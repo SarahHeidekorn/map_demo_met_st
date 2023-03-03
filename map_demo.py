@@ -65,6 +65,7 @@ filter_form.form_submit_button("Submit")
 # construction of the interactive map:
 df_2 = df_selection.dropna(subset=['Longitude'])
 df_2 = df_selection.dropna(subset=['Latitude'])
+df["Lithology_Mineral"].fillna("Unknown", inplace=True)
 
 selected_base_map = st.sidebar.selectbox("Select a base map", list(base_maps.keys()))
 
@@ -74,11 +75,21 @@ world_map = folium.Map(
     tiles = selected_base_map,
 )
 
-for _, site in df_2.iterrows():
-    folium.Marker(
-        location = [site['Latitude'], site['Longitude']], 
-        popup = site['Lithology_Mineral'],
-        tooltip = site['Lithology_Mineral'],
-    ).add_to(world_map)  
+unique_lithologies = df['Lithology_Mineral'].unique()
+colors = sns.color_palette("husl", len(unique_lithologies))
+color_dict = dict(zip(unique_lithologies, colors))
+marker_cluster = MarkerCluster().add_to(world_map)
+
+for _, site in df.iterrows():
+    if not pd.isna(site['Longitude']) and not pd.isna(site['Latitude']):
+        lithology = site['Lithology_Mineral']
+        color = color_dict[lithology]
+        folium.Marker(
+            location=[site['Latitude'], site['Longitude']],
+            popup=lithology,
+            tooltip=lithology,
+            icon=folium.Icon(color=color)
+        ).add_to(marker_cluster)    
+
 
 st_world_map = st_folium(world_map, width=700, height=450)
