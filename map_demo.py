@@ -10,17 +10,17 @@ st.title("Map Demo Test")
 st.write("The map below is supposed to display a potential implementation of cartographic visualizations for an example data set.")
 st.sidebar.header("Select Options")
 
+#@st.cache_data() 
+def load_data():
+    df = pd.read_csv(file)
+    return df
+
 base_maps = {
     "OpenStreetMap": folium.TileLayer("cartodbpositron"),
     "Terrain": folium.TileLayer("Stamen Terrain"),
     "Toner": folium.TileLayer("Stamen Toner"),
     "Watercolor": folium.TileLayer("Stamen Watercolor"),
 }
-
-#@st.cache_data() 
-def load_data():
-    df = pd.read_csv(file)
-    return df
 
 file = "test_data.csv"
 df = load_data()
