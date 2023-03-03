@@ -71,7 +71,7 @@ selected_base_map = st.sidebar.selectbox("Select a base map", list(base_maps.key
 world_map = folium.Map(
     zoom_start = 4,
     location = [-25.0000, 140.0000],
-    tiles = base_maps[selected_base_map],
+    tiles = selected_base_map,
 )
 
 for _, site in df_2.iterrows():
