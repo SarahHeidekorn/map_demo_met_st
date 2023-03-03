@@ -12,9 +12,9 @@ st.sidebar.header("Select Options")
 
 base_maps = {
     "OpenStreetMap": folium.TileLayer("cartodbpositron"),
-    "Stamen Terrain": folium.TileLayer("Stamen Terrain"),
-    "Stamen Toner": folium.TileLayer("Stamen Toner"),
-    "Stamen Watercolor": folium.TileLayer("Stamen Watercolor"),
+    "Terrain": folium.TileLayer("Stamen Terrain"),
+    "Toner": folium.TileLayer("Stamen Toner"),
+    "Watercolor": folium.TileLayer("Stamen Watercolor"),
 }
 
 #@st.cache_data() 
