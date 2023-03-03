@@ -4,6 +4,9 @@ import folium
 import pandas as pd 
 import plotly.express as px
 from streamlit_folium import st_folium
+from folium.plugins import MarkerCluster
+import seaborn as sns
+
 
 st.set_page_config(page_title = "Map Demo", layout = "wide")    
 st.title("Map Demo Test")
