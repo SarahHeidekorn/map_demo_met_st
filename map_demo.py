@@ -10,6 +10,12 @@ st.title("Map Demo Test")
 st.write("The map below is supposed to display a potential implementation of cartographic visualizations for an example data set.")
 st.sidebar.header("Select Options")
 
+base_maps = {
+    "OpenStreetMap": folium.TileLayer("cartodbpositron"),
+    "Stamen Terrain": folium.TileLayer("Stamen Terrain"),
+    "Stamen Toner": folium.TileLayer("Stamen Toner"),
+    "Stamen Watercolor": folium.TileLayer("Stamen Watercolor"),
+}
 
 #@st.cache_data() 
 def load_data():
