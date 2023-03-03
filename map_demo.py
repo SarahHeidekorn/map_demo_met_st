@@ -16,10 +16,10 @@ def load_data():
     return df
 
 base_maps = {
-    "OpenStreetMap": folium.TileLayer("cartodbpositron"),
-    "Terrain": folium.TileLayer("Stamen Terrain"),
-    "Toner": folium.TileLayer("Stamen Toner"),
-    "Watercolor": folium.TileLayer("Stamen Watercolor"),
+    "OpenStreetMap": "cartodbpositron",
+    "Stamen Terrain": "Stamen Terrain",
+    "Stamen Toner": "Stamen Toner",
+    "Stamen Watercolor": "Stamen Watercolor",
 }
 
 file = "test_data.csv"
